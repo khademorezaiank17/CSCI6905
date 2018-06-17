@@ -2,9 +2,10 @@ import _pickle as pickle
 import gzip
 import numpy
 from midi_to_statematrix import *
-
 import multi_training
 import model
+
+
 
 def gen_adaptive(m,pcs,times,keep_thoughts=False,name="final"):
 	xIpt, xOpt = map(lambda x: numpy.array(x, dtype='int8'), multi_training.getPieceSegment(pcs))
@@ -29,6 +30,8 @@ def gen_adaptive(m,pcs,times,keep_thoughts=False,name="final"):
 	if keep_thoughts:
 		pickle.dump(all_thoughts, open('output/'+name+'.p','wb'))
 
+		
+		
 def fetch_train_thoughts(m,pcs,batches,name="trainthoughts"):
 	all_thoughts = []
 	for i in range(batches):
@@ -37,6 +40,8 @@ def fetch_train_thoughts(m,pcs,batches,name="trainthoughts"):
 		all_thoughts.append((ipt,opt,thoughts))
 	pickle.dump(all_thoughts, open('output/'+name+'.p','wb'))
 
+	
+	
 if __name__ == '__main__':
 
 	pcs = multi_training.loadPieces("music")
@@ -46,4 +51,4 @@ if __name__ == '__main__':
 	multi_training.trainPiece(m, pcs, 125)
 
 	pickle.dump( m.learned_config, open( "output/final_learned_config.p", "wb" ) )
-        
+     
