@@ -2,12 +2,13 @@ import os, random
 from midi_to_statematrix import *
 from data import *
 import _pickle as pickle
-
 import signal
+
 
 batch_width = 10 # number of sequences in a batch
 batch_len = 16*8 # length of each sequence
 division_len = 16 # interval between possible start locations
+
 
 def loadPieces(dirpath):
 
@@ -28,6 +29,7 @@ def loadPieces(dirpath):
 
     return pieces
 
+
 def getPieceSegment(pieces):
     Vals=list(pieces.values())   
     piece_output = random.choice(Vals)
@@ -37,9 +39,11 @@ def getPieceSegment(pieces):
     seg_in = noteStateMatrixToInputForm(seg_out)
     return seg_in, seg_out
 
+
 def getPieceBatch(pieces):
     i,o = zip(*[getPieceSegment(pieces) for _ in range(batch_width)])
     return numpy.array(i), numpy.array(o)
+
 
 def trainPiece(model,pieces,epochs,start=0):
     stopflag = [False]
